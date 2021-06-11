@@ -1,0 +1,71 @@
+#+TITLE: Getting Started
+#+ORGA_PUBLISH_KEYWORD: PUBLISHED DONE
+#+TODO: DRAFT | PUBLISHED
+#+TODO: TODO | DONE
+
+* PUBLISHED Org Mode Src Snippet with automatic language attribute :emacs:org-mode:snippet:
+CLOSED: [2021-06-11 Fri 16:00]
+:PROPERTIES:
+:SUMMARY: Automatic code property in org src block
+:END:
+
+[[./media/emacs-org_mode_src_snippet_with_automatic_language_attribute.mp4][📹 Screencast of snippet in action]]
+
+This snippet expands to an [[https://orgmode.org/manual/Working-with-Source-Code.html][Org mode source block]] with the language type automatically prefilled,
+by looking at the blocks above the cursor.
+
+This is helpful for documents like programming notes on various languages,
+where you don't have to type the language when you quickly want to add a snippet.
+
+** The Code
+
+It uses [[https://github.com/joaotavora/yasnippet][yasnippet]] to insert the code block.
+[[https://github.com/joaotavora/yasnippet][Yasnippet]] can execute ~emacs-lisp~ code in it's own snippets,
+so here we call the function ~(+yas/org-last-src-lang)~ which finds the nearest src block, and takes it's language type ✨.
+
+#+begin_src snippet
+# -*- mode: snippet -*-
+# name: #+begin_src
+# uuid: src
+# key: <
+# --
+\\#+begin_src ${1:`(+yas/org-last-src-lang)`}
+`%`$0
+\\#+end_src
+#+end_src
+
+You've got to remove the ~\\~ escaping characters in the code block above, until I figure out how to include escaping in source blocks with [[https://orga.js.org/][orga]] 🥲
+
+#+begin_src elisp
+(defun +yas/org-src-lang ()
+  "Try to find the current language of the src/header at point.
+Return nil otherwise."
+  (save-excursion
+    (pcase
+        (downcase
+         (buffer-substring-no-properties
+          (goto-char (line-beginning-position))
+          (or (ignore-errors (1- (search-forward " " (line-end-position))))
+              (1+ (point)))))
+      ("#+property:"
+       (when (re-search-forward "header-args:")
+         (buffer-substring-no-properties
+          (point)
+          (or (and (forward-symbol 1) (point))
+              (1+ (point))))))
+      ("#+begin_src"
+       (buffer-substring-no-properties
+        (point)
+        (or (and (forward-symbol 1) (point))
+            (1+ (point)))))
+      ("#+header:"
+       (search-forward "#+begin_src")
+       (+yas/org-src-lang))
+      (_ nil))))
+
+(defun +yas/org-last-src-lang ()
+  (save-excursion
+    (beginning-of-line)
+    (when (search-backward "#+begin_src" nil t)
+      (+yas/org-src-lang))))
+#+end_src
