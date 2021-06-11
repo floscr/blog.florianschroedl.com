@@ -1,15 +1,15 @@
 module.exports = {
   pathPrefix: `/gatsby-starter-blorg`,
   siteMetadata: {
-    siteURL: 'https://orga.js.org', // replace this with your own domain
-    title: `Gatsby With Orga`, // replace it with your own title
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: 'Xiaoxing Hu', // this one is take, choose another name
-    twitter: 'xiaoxinghu', // replace it, or set to 'false' to disable "Tweet this" button
-    social: [ // again, replace thse with your own value, or set to empty array to disable them
-      { name: 'twitter', url: 'https://twitter.com/xiaoxinghu' },
-      { name: 'website', url: 'https://www.huxiaoxing.com' },
-      { name: 'github', url: 'https://github.com/xiaoxinghu' },
+    siteURL: 'https://blog.florianschroedl.com',
+    title: `Blog | Florian Schrödl`,
+    description: `Personal blog about all things javascript, nix, nixos, emacs & functional programming.`,
+    author: 'Florian Schrödl',
+    twitter: 'florianscr',
+    social: [
+      { name: 'twitter', url: 'https://twitter.com/florianscr' },
+      { name: 'website', url: 'https://blog.florianschroedl.com' },
+      { name: 'github', url: 'https://github.com/floscr' },
     ]
   },
   plugins: [
