@@ -1,28 +1,29 @@
 module.exports = {
   pathPrefix: `/gatsby-starter-blorg`,
   siteMetadata: {
-    title: `Blog | Florian Schrödl`,
-    description: `Personal blog about all things javascript, nix, nixos, emacs & functional programming.`,
-    author: 'Florian Schrödl',
-    twitter: 'florianscr',
     siteUrl: "https://blog.florianschroedl.com",
+    title: "Blog | Florian Schrödl",
+    description:
+      "Personal blog about all things javascript, nix, nixos, emacs & functional programming.",
+    author: "Florian Schrödl",
+    twitter: "florianscr",
     social: [
-      { name: 'twitter', url: 'https://twitter.com/florianscr' },
-      { name: 'website', url: 'https://blog.florianschroedl.com' },
-      { name: 'github', url: 'https://github.com/floscr' },
-    ]
+      { name: "twitter", url: "https://twitter.com/florianscr" },
+      { name: "website", url: "https://blog.florianschroedl.com" },
+      { name: "github", url: "https://github.com/floscr" },
+    ],
   },
   plugins: [
-    'gatsby-plugin-feed',
+    // 'gatsby-plugin-feed',
     {
-      resolve: 'gatsby-plugin-matomo',
+      resolve: "gatsby-plugin-matomo",
       options: {
-        siteId: '1',
-        matomoUrl: 'https://analytics.florianschroedl.com',
-        siteUrl: 'https://blog.florianschroedl.com',
+        siteId: "1",
+        matomoUrl: "https://analytics.florianschroedl.com",
+        siteUrl: "https://blog.florianschroedl.com",
         disableCookies: true,
         dev: true,
-      }
+      },
     },
     {
       resolve: `gatsby-theme-blorg`,
