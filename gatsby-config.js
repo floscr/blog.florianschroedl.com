@@ -40,5 +40,57 @@ module.exports = {
         // postRedirect: () => [],
       },
     },
+    {
+      resolve: "gatsby-plugin-feed",
+      options: {
+        setup(ref) {
+          const metaInfo = ref.query.site.siteMetadata
+
+          metaInfo.generator = "GatsbyJS test"
+          return metaInfo
+        },
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize(value) {
+              const rssMetadata = value.query.site.siteMetadata
+              return value.query.allOrgPost.edges.map((x) => ({
+                description: x.node.title,
+                date: x.node.date,
+                url: rssMetadata.siteUrl + x.node.slug,
+                guid: rssMetadata.siteUrl + x.node.slug,
+              }))
+            },
+            query: `
+              {
+                allOrgPost {
+                  edges {
+                    node {
+                      id
+                      date
+                      slug
+                      title
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/feed.xml",
+            title: "Florian Schrödl | Blog",
+          },
+        ],
+      },
+    },
   ],
 }
