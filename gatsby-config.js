@@ -1,11 +1,11 @@
 module.exports = {
   pathPrefix: `/gatsby-starter-blorg`,
   siteMetadata: {
-    siteURL: 'https://blog.florianschroedl.com',
     title: `Blog | Florian Schrödl`,
     description: `Personal blog about all things javascript, nix, nixos, emacs & functional programming.`,
     author: 'Florian Schrödl',
     twitter: 'florianscr',
+    siteUrl: "https://blog.florianschroedl.com",
     social: [
       { name: 'twitter', url: 'https://twitter.com/florianscr' },
       { name: 'website', url: 'https://blog.florianschroedl.com' },
