@@ -46,7 +46,7 @@ module.exports = {
         setup(ref) {
           const metaInfo = ref.query.site.siteMetadata
 
-          metaInfo.generator = "GatsbyJS test"
+          metaInfo.generator = "GatsbyJS"
           return metaInfo
         },
         query: `
@@ -66,7 +66,8 @@ module.exports = {
             serialize(value) {
               const rssMetadata = value.query.site.siteMetadata
               return value.query.allOrgPost.edges.map((x) => ({
-                description: x.node.title,
+                title: x.node.title,
+                description: x.node.excerpt,
                 date: x.node.date,
                 url: rssMetadata.siteUrl + x.node.slug,
                 guid: rssMetadata.siteUrl + x.node.slug,
@@ -81,6 +82,7 @@ module.exports = {
                       date
                       slug
                       title
+                      excerpt
                     }
                   }
                 }
