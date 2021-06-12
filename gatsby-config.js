@@ -14,6 +14,16 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: 'gatsby-plugin-matomo',
+      options: {
+        siteId: '1',
+        matomoUrl: 'https://analytics.florianschroedl.com',
+        siteUrl: 'https://blog.florianschroedl.com',
+        disableCookies: true,
+        dev: true,
+      }
+    },
+    {
       resolve: `gatsby-theme-blorg`,
       options: {
         // contentPath: 'content',
