@@ -13,6 +13,7 @@ module.exports = {
     ]
   },
   plugins: [
+    'gatsby-plugin-feed',
     {
       resolve: 'gatsby-plugin-matomo',
       options: {

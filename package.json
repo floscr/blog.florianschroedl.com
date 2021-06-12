@@ -6,6 +6,7 @@
   "author": "Xiaoxing Hu <xiaoxing@huxx.org>",
   "dependencies": {
     "gatsby": "^3.2.1",
+    "gatsby-plugin-feed": "^3.7.1",
     "gatsby-plugin-matomo": "^0.10.0",
     "gatsby-theme-blorg": "^2.3.16",
     "prop-types": "^15.7.2",
