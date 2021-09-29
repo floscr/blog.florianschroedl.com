@@ -1,0 +1,81 @@
+#+TITLE: Xmonad
+
+#+ORGA_PUBLISH_KEYWORD: PUBLISHED DONE
+#+TODO: DRAFT | PUBLISHED
+#+TODO: TODO | DONE
+
+* PUBLISHED Open a terminal with the same directory as the previous terminal in XMonad and ZSH :xmonad:zsh:X11:
+CLOSED: [2021-09-29 Wed]
+
+Many configs solve this by setting the title of the terminal to the current directory (or join the path with the title and a seperator).
+
+But this is a workaround and requires unsafe parsing (& ugly window titles).
+
+We can solve this issue by creating a custom X property where we store our shell path.
+
+** Adding a Zsh hook to set the window property
+
+I use [[https://www.zsh.org/][Zsh]] as my main shell, where we can set up a hook to define the property:
+
+#+begin_src sh
+# Sets a x window property on every directory change in the shell
+# So I can stay in the same directory when opening a new terminal
+function my_set_xwindow_path_hook() {
+  if [[ $TERM == "xterm-256color" && ! -z $WINDOWID ]]; then
+    xprop -id $WINDOWID -f MY_XWINDOW_PATH 8s -set MY_XWINDOW_PATH "$(pwd)"
+  fi
+}
+chpwd_functions=(${chpwd_functions[@]} "my_set_xwindow_path_hook")
+precmd_functions=(${precmd_functions[@]} "my_set_xwindow_path_hook")
+#+end_src
+
+Source: [[https://github.com/floscr/dotfiles/blob/e7470a0f1ff627eae74c1207c4911c8cc03be284/config/zsh/.zshrc#L17-L24][dotfiles/.zshrc at e7470a0f1ff627eae74c1207c4911c8cc03be284 · floscr/dotfiles]]
+
+
+This makes use of [[https://zsh.sourceforge.io/Doc/Release/Functions.html#Hook-Functions][hook functions]]:
+ - ~chpwd_functions~ - Executed whenever the cwd is changed
+ - ~precmd_functions~ - Executed before each prompt
+
+Now when we query a windows X properties with a tool like [[https://www.x.org/releases/X11R7.5/doc/man/man1/xprop.1.html][xprop]] you will get this:
+
+#+begin_src
+$ xprop | grep "MY_XWINDOW_PATH(STRING)"
+MY_XWINDOW_PATH(STRING) = "/tmp"
+#+end_src
+
+** Adding the XMonad logic
+
+For this I'm using [[https://github.com/alacritty/alacritty][alacritty]] and set ~myTerminal~ variable in my XMonad config.
+Alacritty offsers a ~--working-directory~ flag to set the initial directory.
+
+To open the terminal we'll create a function that checks the currenty focused window for the ~MY_XWINDOW_PATH~ property:
+
+#+begin_src haskell
+-- Open terminal in the path that is set in the xproperty "MY_XWINDOW_PATH"
+-- otherwise use default terminal
+openTerminal = do
+  let
+    spawnEmptyTerminal = spawn myTerminal
+
+    trySpawnTerminalAtCwd w = do
+        cwd <- runQuery (stringProperty "MY_XWINDOW_PATH") w
+        case cwd of
+          [] -> spawnEmptyTerminal
+          xs -> spawn (myTerminal ++ " --working-directory \"" ++ show xs ++ "\"")
+
+    in withWindowSet $ \w -> case (W.peek w) of
+        Just win -> trySpawnTerminalAtCwd win
+        Nothing  -> spawnEmptyTerminal
+#+end_src
+
+Source: [[https://github.com/floscr/dotfiles/blob/986849c223a4a9413d39cf492c80ba24f1feda86/config/xmonad/xmonad.hs#L102-L116][dotfiles/xmonad.hs at 986849c223a4a9413d39cf492c80ba24f1feda86 · floscr/dotfiles]]
+
+Here we check if there is a currently focused window and if it has the X property.
+We don't need to check for the window classname or title and we could extend this to any sort of application.
+(For instance, launching a terminal from your non-terminal editors path).
+
+Now we call the function with a keybinding with the default binding =Mod+Return=
+
+#+begin_src haskell
+(modMask, xK_Return), openTerminal)
+#+end_src
