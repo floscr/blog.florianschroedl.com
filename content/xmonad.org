@@ -7,13 +7,33 @@
 * PUBLISHED Open a terminal with the same directory as the previous terminal in XMonad and ZSH :xmonad:zsh:X11:
 CLOSED: [2021-09-29 Wed]
 
+**Update** [2021-11-03]
+
+I'm using [[https://github.com/schischi/xcwd][xcwd]] now, which is a much simpler implementation, thanks to [[https://github.com/liskin][liskin]]!
+
+I'm leaving the old implementation up though as it might be still interesting.
+
+** xcwd Implementation
+
+[[https://github.com/schischi/xcwd][xcwd]] gets the working path from the current X windows.
+
+So it can also get the working directory from your editor for example 🎉
+
+The implementation is straighforward, for example with alacritty you simply add a binding like this:
+
+#+begin_src haskell
+((modMask, xK_Return), spawn (myTerminal ++ " --working-directory \"`xcwd`\""))
+#+end_src
+
+** ZSH Hook Implementation
+
 Many configs solve this by setting the title of the terminal to the current directory (or join the path with the title and a seperator).
 
 But this is a workaround and requires unsafe parsing (& ugly window titles).
 
 We can solve this issue by creating a custom X property where we store our shell path.
 
-** Adding a Zsh hook to set the window property
+*** Adding a Zsh hook to set the window property
 
 I use [[https://www.zsh.org/][Zsh]] as my main shell, where we can set up a hook to define the property:
 
@@ -43,7 +63,7 @@ $ xprop | grep "MY_XWINDOW_PATH(STRING)"
 MY_XWINDOW_PATH(STRING) = "/tmp"
 #+end_src
 
-** Adding the XMonad logic
+*** Adding the XMonad logic
 
 For this I'm using [[https://github.com/alacritty/alacritty][alacritty]] and set ~myTerminal~ variable in my XMonad config.
 Alacritty offsers a ~--working-directory~ flag to set the initial directory.
