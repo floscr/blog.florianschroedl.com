@@ -67,3 +67,27 @@ Return nil otherwise."
     (when (search-backward "#+begin_src" nil t)
       (+yas/org-src-lang))))
 #+end_src
+* DRAFT Managing bookmarks with org mode :emacs:org-mode:
+
+I manage all my links in a single org document together with meta data like tags and creation date.
+
+Having this collection of links
+* DRAFT Renaming multiple files matching a pattern with emacs & dired
+
+After watching [[https://www.youtube.com/watch?v=CyVV2FI7-DE][Command Line Fu - sed + find tricks]] I wanted to figure out how to rename multiple files with emacs and ~dired~ and ~evil~.
+
+Here's my step by step solution
+
+1. =C-u x d= to open a new ~dired~ buffer with custom flags
+   In this case we use ~-R~ to show the directory recursively.
+2. Search for the wanted files with ~/~
+3. Toggle ~dired-toggle-read-only~ with ~i~
+   This will let you edit the file names directly in the ~dired~ buffer.
+4. Visual select the portion of the file we want to change
+5. Press ~*~ to take the visual region as input for a ex command
+6. Replace the selection with a regexp ~:%s//my_replacement~
+7. Commit the changes with ~wdired-finish-edit~ or =C-c C-c=
+8. Your changes are now written!
+
+While I appreciate the unix command way, emacs is much more interactive in doing these kind of operations.
+You could apply any kind of transformations to your selection (macros, commands, etc)
