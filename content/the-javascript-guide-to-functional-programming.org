@@ -1,0 +1,103 @@
+#+TITLE: Getting Started
+#+ORGA_PUBLISH_KEYWORD: PUBLISHED DONE
+#+TODO: DRAFT | PUBLISHED
+#+TODO: TODO | DONE
+
+* DRAFT Functional programming terminology for javascript programmers
+
+This will be a multi-part series for functional programming on javascript.
+
+It will cover some terms and concepts that I've also had to struggle with in my learning of functional javascript.
+
+
+* DRAFT Immutability
+* DRAFT Function Signatures
+* DRAFT Readable Code
+* DRAFT Abstract variable naming
+
+When reading functional code bases you might be annoyed with all those abstract variable names.
+What do these functional programmers think of themselves to be of the high mathematicians council to use these abstract letters!
+
+k
+
+* DRAFT Currying
+
+** Foreword
+
+In my opinion =currying= should be avoided in shared code bases that are not libraries.
+
+Currying can become hard to understand for beginners and has minimal benefits.
+
+It also can lead to runtime issues due to repeated creation of functions.
+
+** Origins of the word
+
+In the beginning of learning FP you will get bombarded with new terms and concepts, so you probably wont look up every term and it's name origins.
+
+For me that term was =currying=.
+
+For the longest time I believed it meant to mix functions like a stew... a curry.
+Mixing all the parameters to build the final function dish, it made total sense to me 😅
+
+But in fact the name is a reference to [[https://en.wikipedia.org/wiki/Haskell_Curry][Haskell Curry]].
+Haskell is the ultimate FP programming language, so now the terminology might make sense now.
+
+Fun fact, the original concept of  =currying= was introduced by [[https://en.wikipedia.org/wiki/Moses_Sch%C3%B6nfinkel][Moses Schönfinkel]], so the term might also  called =schönfinkeling=.
+
+So you can bamboozle your FP colleagues in the next meeting with a new term.
+
+** Usage
+
+=Currying= is a process that seperates a function by all it's arguments into seperate parts.
+
+This means, a function can be called with a
+
+Here we go for a simple implementation of =add=.
+
+#+begin_src js
+// es6
+const add = a => b => a + b;
+
+// es5
+const add = function(a) {
+  return function(b) {
+    return a + b
+  }
+}
+#+end_src
+
+This function means we've got two add two parameters to get the final result.
+
+It is almost the same as their counterparts
+
+#+begin_src js
+// es6
+const add = (a, b) => a + b;
+
+// es5
+const add = function(a, b) {
+  return a + b;
+}
+#+end_src
+
+Why is this practically?
+
+You can generate functions in your toolset by supplying only one argument:
+
+#+begin_src js
+const add1 = add(1);
+
+const result = add1(2); // 3
+#+end_src
+
+This function now returns that only takes a single parameter
+
+
+** Constructing a curry function
+
+
+
+* DRAFT Static typing
+* DRAFT Composition and pippi
+* DRAFT The holy trinity map - filter - reduce
+* DRAFT The boolean trap
