@@ -1,0 +1,21 @@
+#+TITLE: Nixos
+#+ORGA_PUBLISH_KEYWORD: PUBLISHED DONE
+#+TODO: DRAFT | PUBLISHED
+#+TODO: TODO | DONE
+
+* DRAFT Review & Configuring for keeb.io BDN9 with QMK and Nix
+
+** Process
+
+
+
+
+** Links
+
+- [[https://github.com/qmk/qmk_firmware/tree/master/keyboards/keebio/bdn9][qmk_firmware/keyboards/keebio/bdn9 at master · qmk/qmk_firmware]]
+
+*** Nixos QMK repositories
+
+- [[https://docs.qmk.fm/#/getting_started_build_tools][QMK Firmware]]
+- [[https://framagit.org/4sStylZ/qmk_firmware/blob/master/shell.nix][shell.nix · master]]
+- [[https://github.com/Patryk27/qmk][Patryk27/qmk]]
