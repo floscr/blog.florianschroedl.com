@@ -1,10 +1,8 @@
-#+TITLE: Getting Started
-#+ORGA_PUBLISH_KEYWORD: PUBLISHED DONE
-#+TODO: DRAFT | PUBLISHED
+#+TITLE: Getting Started #+ORGA_PUBLISH_KEYWORD: PUBLISHED DONE #+TODO: DRAFT | PUBLISHED
 #+TODO: TODO | DONE
 
 * PUBLISHED Org Mode Src Snippet with automatic language attribute :emacs:org-mode:snippet:
-CLOSED: [2021-06-11 Fri 16:00]
+CLOSED: [2021-06-11 Fri]
 :PROPERTIES:
 :SUMMARY: Automatic code property in org src block
 :END:
